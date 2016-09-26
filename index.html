@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en" ng-app="MyApp">
+
+<head>
+
+    <!-- Scrolls -->
+	
+    <meta name="viewport" content="initial-scale=1" />
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.9.4/angular-material.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=RobotoDraft:300,400,500,700,400italic">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' type='text/css'>
+	<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.9.0/loading-bar.min.css' type='text/css' media='all' />
+
+    <link rel="stylesheet" href="css/style.css">
+    
+	<title>LearningHub</title>
+</head>
+
+<body layout="column" ng-controller="main">
+
+    <md-toolbar layout="row">
+        <div class="md-toolbar">
+            <h1><i class="material-icons md-48">face</i>Springboard - Learning Hub</h1>
+        </div>
+        <md-button ng-click="toggleSidenav('left')" hide-gt-sm class="md-icon-button">
+            <md-icon aria-label="Menu" md-svg-icon="https://s3-us-west-2.amazonaws.com/s.cdpn.io/68133/menu.svg"></md-icon>
+        </md-button>
+    </md-toolbar>
+	
+    <div layout="row" flex>
+	
+        <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')">
+            
+			<md-slider-container>
+			
+                <md-toolbar class="md-theme-indigo">
+                    <h1 class="md-toolbar-tools">Sort</h1>
+                </md-toolbar>
+				
+                <br>
+				<md-radio-group ng-model="sortRadio">
+				<md-radio-button class="md-primary" value="upvotes">Vote(Up)</md-radio-button>
+                <md-radio-button class="md-primary" value="!upvotes">Vote(Down) </md-radio-button>
+                <md-radio-button class="md-primary" value="learner">Learners</md-radio-button>
+				<md-radio-button class="md-primary" value="hours">Duration</md-radio-button>
+				</md-radio-group>
+				<strong><div id="result" style="bottom:0;"></div></strong>
+				
+        </md-sidenav>
+
+
+
+
+        <div layout="column" flex id="content">
+		
+            <md-content layout="column" flex class="md-padding">
+			
+                <md-input-container class="md-block">
+                    <!-- Use floating placeholder instead of label -->
+                    <i class="material-icons">search</i>
+                    <input ng-model="search" ng-model-options="{ debounce: 800 }" onclick="select()" placeholder="search (by tag)" class="form-control" autofocus>
+                </md-input-container>
+				
+                <br><br>             
+				
+				
+                
+                <h2><strong>Found total:</strong> {{details.paths.length}}</h2>
+                <h3><strong>Showing:</strong> {{filteredResults.length}}</h3>
+				<p>{{items.upvotes}}</p>
+				
+                <div ng-repeat="items in filteredResults = (details.paths | orderBy:sortRadio | filter:search)">
+
+                    <md-card>
+                        <md-card-title>
+                            <md-card-title-text>
+							     <h3><img ng-src="{{items.image}}" class="md-avatar-icon" alt="avatar" style="height:50px;width:50px;"/>
+								
+                                <strong><a>{{ items.name}}</a> </strong>
+			                    <span style="float:right;"><i class="material-icons">keyboard_capslock</i><md-button ng-click="upVote(items.id);clickCounter()" id="result{{items.id}}">UPVOTE</md-button></span></h3>
+                            </md-card-title-text>
+                        </md-card-title>
+
+                        <md-card-content>
+						    <p>
+							    <strong>ID:</strong>{{items.id}}  &nbsp;&nbsp; <strong>Learners:</strong>{{items.learner}}  &nbsp;&nbsp;   <strong>Hours:</strong>{{items.hours}}
+							</p>
+							<p>
+                                <i class="material-icons">link</i><a href="{{ items.sign_up }}" target="_blank">View Curriculum</a>
+                            </p>
+                            <p>
+                                <i class="material-icons">local_offer</i><strong> {{ items.tags }} </strong>
+							</p>
+
+                        </md-card-content>
+                    </md-card>
+                    <br>
+
+                </div>
+            </md-content>
+        </div>
+    </div>
+	
+	
+
+
+
+    <!-- Angular Material Dependencies -->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-aria.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.9.0/loading-bar.min.js'></script>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/0.10.0/angular-material.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="app.js"></script>
+
+
+
+
+</body>
+
+</html>
