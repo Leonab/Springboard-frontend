@@ -54,9 +54,9 @@ angular.module('MyApp', ['ngMaterial', 'angular-loading-bar', 'ngAnimate'])
 		
 		//individual upvotes
 		
-		if(num[deal])
+		/*if(num[deal])
          console.log(num[deal]);
-        else
+        else*/
 		num = $scope.details.paths[deal].upvotes;
 	    if(typeof(Storage) !== "undefined") {
         if (localStorage.num) {
